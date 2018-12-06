@@ -186,7 +186,7 @@ func signup(response http.ResponseWriter, email, password1, password2 string) {
 			current_date := time.Now().Local().Format("2006-01-02")
 
 	        var lastInsertId int
-			err = db.QueryRow("INSERT INTO users (email, pw, created, verified, premium) VALUES ($1, $2, $3, $4, $5) returning uid;", email, encrypted_password, current_date, 'F', false).Scan(&lastInsertId)
+			err = db.QueryRow("INSERT INTO users (email, pw, created, verified) VALUES ($1, $2, $3, $4) returning uid;", email, encrypted_password, current_date, 'F', false).Scan(&lastInsertId)
 			fmt.Println("ERROR INSERT: ", err)
 
 			encrypted_code := RandString(20)
