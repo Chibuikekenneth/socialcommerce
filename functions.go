@@ -201,7 +201,7 @@ func signup(response http.ResponseWriter, email, password1, password2 string) {
 			fmt.Println("ERROR INSERT: ", err)
 			fmt.Println("NEWLY CREATED RID: ", rid)
 
-			subject := "Verify your account with Bizevote."
+			subject := "Verify your account with Social Commerce."
 
 			body := create_email_body("To verify your account please press the button below.",
 									  "verify",
