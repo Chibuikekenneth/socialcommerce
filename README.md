@@ -1,5 +1,5 @@
-# socialcommerce
-Social Capital in an open source platform.
+# Wombol.com
+Wombol.com in an open source social media site that allows you to outsource your todo list items to people on your network.
 
 #MVP Requirements for v1
 1.	Signup
