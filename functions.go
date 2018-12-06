@@ -201,7 +201,6 @@ func signup(response http.ResponseWriter, email, password1, password2 string) {
 			fmt.Println("ERROR INSERT: ", err)
 			fmt.Println("NEWLY CREATED RID: ", rid)
 
-			from := "bucklerco@gmail.com"
 			subject := "Verify your account with Bizevote."
 
 			body := create_email_body("To verify your account please press the button below.",
@@ -214,7 +213,7 @@ func signup(response http.ResponseWriter, email, password1, password2 string) {
 				   "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n" +
 				   body
 			smtp.SendMail("smtp.gmail.com:587",
-						  smtp.PlainAuth("", from, "PW123!!pw", "smtp.gmail.com"),
+						  smtp.PlainAuth("", from, "", "smtp.gmail.com"),
 						  from, []string{email}, []byte(msg))
 			execute_context(response, "index.html", email, "Success: an email has been sent to verify access and login.", "Success")
 		}
