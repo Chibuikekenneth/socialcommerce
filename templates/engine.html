@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- JS -->
+    <script src="/static/js/jquery.js/"></script>
+    <script src="/static/js/popper.js/" ></script>
+    <script src="/static/js/bootstrap.js/"></script>
+    <script src="/static/js/datatable-jquery.js/"></script>
+    <script src="/static/js/datatables.js/"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css/">
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.css/">
+    <link rel="stylesheet" href="/static/css/datatables.css/">
+    <link rel="stylesheet" href="/static/css/style.css/">
+    
+    <title>Wombol.com</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <a class="navbar-brand" href="/">Wombol.com</a>
+      <button class="navbar-toggler" 
+              type="button" 
+              data-toggle="collapse" 
+              data-target="#navbarSupportedContent" 
+              aria-controls="navbarSupportedContent" 
+              aria-expanded="false" 
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/history/">Evote History</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="/creator/">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create Evote&nbsp;<i class="fa fa-plus"></i></button>
+        </form>
+        <form class="form-inline my-2 my-lg-0" method="POST" action="/logout/">
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout&nbsp;<i class="fas fa-sign-out-alt"></i></button>
+        </form>
+      </div>
+    </nav>
+    <br />
+    <div class="container table-col">
+          <div class="topics" align="center">
+            <br />
+            <h3>Current Topics</h3>
+            <table class="table table-striped table-bordered" id="topics">
+              <thead class="thead-dark">
+                <tr class="table_row">
+                  <th scope="col">Date</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Vote Type</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Remaining Time</th>
+                  <th scope="col">Link</th>
+                  <th scope="col">Admin Page</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range $i, $v := .Topics}}
+                <tr class="table_row">
+                  <th scope="row">
+                    {{ format $v.Created}}
+                  </th>
+                  <td>
+                    {{ title $v.Name}}
+                  </td>
+                  <td>
+                    {{ title $v.VoteType}}
+                  </td>
+                  <td>
+                    {{ if $v.Status }}
+                      Active
+                    {{ else }}
+                      Inactive
+                    {{ end }}
+                  </td>
+                  <td>
+                    {{ if $v.Status }}
+                      {{remain $v.Remaining}}
+                    {{ end }}
+                  </td>
+                  <td>
+                    <a href="{{ .Url }}{{ .Tid }}/">{{ .Link }}{{.Tid}}/</a>
+                  </td>
+                  <td>
+                    <form action="/admin/" method="GET">
+                      <input type="hidden" 
+                             name="tid" 
+                             value="{{$v.Tid}}">
+                      <input type="hidden"
+                             name="name"
+                             value="{{$v.Name}}">
+                      <input type="hidden"
+                             name="choices"
+                             value="{{$v.Choices}}">
+                      <input type="hidden"
+                             name="details"
+                             value="{{$v.Details}}">
+                      <input type="hidden"
+                             name="votetype"
+                             value="{{$v.VoteType}}">
+                      <input type="hidden"
+                             name="status"
+                             value="{{$v.Status}}">
+                      <input type="hidden"
+                             name="created"
+                             value="{{$v.Created}}">
+                      <input type="hidden"
+                             name="remaining"
+                             value="{{$v.Remaining}}">
+                      <input type="hidden"
+                             name="url"
+                             value="{{$v.Url}}">
+                      <input type="hidden"
+                             name="link"
+                             value="{{$v.Link}}">
+                      
+                      <button type="submit" 
+                              class="btn btn-outline-secondary">Go</button>
+                    </form>
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            <table>
+          </div>
+          <div class="modal"><!-- Place at bottom of page --></div>
+    </div>
+    <script>
+      var table = $("#topics").DataTable();
+
+      $("#topics tbody").on("mouseenter", "td", function() {
+          var column_index = table.cell(this).index();
+          $(table.cells().nodes()).removeClass("highlight");
+          $(table.column(column_index).nodes()).addClass("highlight");
+      });
+    </script>
+  
+  </body>
+
+</html>

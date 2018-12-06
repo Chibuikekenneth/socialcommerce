@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css/">
+    <link rel="stylesheet" href="/static/css/style.css/">
+
+    <title>{{.Logo}}</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <a class="navbar-brand" href="/">{{.Logo}}</a>
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            
+          </li>
+        </ul>
+        <button class="btn btn-outline-success my-2 my-sm-0" id="login-btn">Login</button>&nbsp;
+        <button class="btn btn-outline-primary my-2 my-sm-0"id="signup-btn">Signup</button>
+    </nav>
+
+ <div class="modal" tabindex="-1" role="dialog" id="business-modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+              <form id="login-form" method="POST" action="/login/">
+                <div class="modal-body">
+                  <label>Email</label><br />
+                  <input class="form-control" type="email" name="email" id="login-email"><br />
+                  <label>Password</label><br />
+                  <input class="form-control" type="password" name="password" id="login-password">
+                  <input type="hidden" value="login">
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-outline-success" id="login-post">Login</button>
+                </div>
+              </form>
+
+              <form id="signup-form" method="POST" action="/signup/">
+                <div class="modal-body">
+                  <label>Email</label><br />
+                  <input class="form-control" type="email" name="email" id="signup-email"><br />
+                  <label>Password</label><br />
+                  <input class="form-control" type="password" name="password1" id="signup-password1"><br />
+                  <label>Confirm Password</label><br />
+                  <input class="form-control" type="password" name="password2" id="signup-password2">
+                  <input type="hidden" value="signup">
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-outline-primary" id="signup-post">Signup</button>
+                </div>
+              </form>
+              <form id="verify-form">
+                <div class="modal-body">
+                  <h3>{{.HiddenError}}</h3>
+                  <p>{{.Error}}</p>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </form>
+            <p id="error">{{.Error}}</p>
+            <p id="hidden-error">{{.HiddenError}}</p>
+          </div>
+        </div>
+      </div>
+    <div class="container">
+      <img src="/static/banner.png/">
+      <div class="form-group" align="center">
+          <h3>A better way to make business decisions.</h3>
+          <p class="lead">Enter your email to start now.</p>
+          <input type="email" name="email" class="form-control email-input"><br>
+          <button class="btn btn-primary" id="email-btn">Submit</button>
+      </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid" id="capabilities">
+      <div class="container">
+        <h1 class="display-4">Capabilities</h1>
+        <img src="/static/images/screenshot.PNG">
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="/static/js/jquery.js/"></script>
+    <script src="/static/js/popper.js/" ></script>
+    <script src="/static/js/bootstrap.js/"></script>
+
+    <script>
+
+      $(document).ready(function() {
+
+        if ($("#error").text()!="") {
+
+          if ($("#hidden-error").text() == "login") {
+              $(".modal-title").text("Login");
+              $("#login-post").show();
+              $("#signup-post").hide();
+              $("#signup-form").hide();
+              $("#login-form").show();
+              $("#verify-form").hide();
+              $("#business-modal").modal("show");
+
+          } else if ($("#hidden-error").text() == "signup") {
+              $(".modal-title").text("Signup");
+              $("#login-post").hide();
+              $("#signup-post").show();
+              $("#login-form").hide();
+              $("#verify-form").hide();
+              $("#signup-form").show();
+              $("#business-modal").modal("show");
+
+          } else if ($("#hidden-error").text() == "Success") {
+              $(".modal-title").text("Verify Your Email");
+              $("#login-post").hide();
+              $("#signup-post").hide();
+              $("#error").hide();
+              $("#hidden-error").hide();
+              $("#login-form").hide();
+              $("#signup-form").hide();
+              $("#verify-form").show();
+              $("#business-modal").modal("show");
+
+          }
+        }
+
+        $("#login-btn").on("click", function() {
+          $(".modal-title").text("Login");
+          $("#login-post").show();
+          $("#signup-post").hide();
+          $("#verify-form").hide();
+          $("#signup-form").hide();
+          $("#login-form").show();
+          $("#business-modal").modal("show");
+        });
+
+        $("#signup-btn").on("click", function() {
+          $(".modal-title").text("Signup");
+          $("#login-post").hide();
+          $("#signup-post").show();
+          $("#verify-form").hide();
+          $("#login-form").hide();
+          $("#signup-form").show();
+          $("#business-modal").modal("show");
+        });
+
+      });
+    </script>
+  </body>
+</html>
